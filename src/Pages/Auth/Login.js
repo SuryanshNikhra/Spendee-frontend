@@ -47,23 +47,23 @@ const Login = () => {
     const { email, password } = values;
 
     setLoading(true);
-    try{
-    const { data } = await axios.post(loginAPI, {
-      email,
-      password,
-    });
-    
+    try {
+      const { data } = await axios.post(loginAPI, {
+        email,
+        password,
+      });
 
-    if (data.success === true) {
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/");
-      toast.success(data.message, toastOptions);
-      setLoading(false);
-    } else {
-      toast.error(data.message, toastOptions);
-      setLoading(false);
-    } }catch(error){
-      toast.error("INVALID EMAIL OR PASSWORD", toastOptions);
+      if (data.success === true) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/");
+        toast.success(data.message, toastOptions);
+        setLoading(false);
+      } else {
+        toast.error(data.message, toastOptions);
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message, toastOptions);
       setLoading(false);
     }
   };
